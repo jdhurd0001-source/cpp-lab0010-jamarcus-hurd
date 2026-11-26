@@ -117,3 +117,15 @@ TEST_CASE("HashTable handles many strings and negative values") {
     REQUIRE(table.get("big") == 123456);
     REQUIRE(table.get("another") == -999);
 }
+
+TEST_CASE("HashTable reuses tombstones and throws for missing get") {
+    HashTable table(17);
+    REQUIRE(table.insert("temporary", 7));
+    REQUIRE(table.remove("temporary"));
+    REQUIRE_FALSE(table.contains("temporary"));
+
+    REQUIRE(table.insert("temporary", 8));
+    REQUIRE(table.get("temporary") == 8);
+    REQUIRE(table.size() == 1u);
+    REQUIRE_THROWS_AS(table.get("missing"), std::out_of_range);
+}

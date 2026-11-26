@@ -1,9 +1,6 @@
-
 #include "project/hash_table.h"
 
-#include <cmath>
 #include <stdexcept>
-#include <utility>
 
 // Constructor
 HashTable::HashTable(std::size_t capacity)
